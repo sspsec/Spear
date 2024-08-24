@@ -93,6 +93,32 @@ Spear.app/Contents/Resources/resources/webshell/AntSword/antSword-2.1.15
 
 参考国光的 BurpSuite 激活：[链接](https://www.sqlsec.com/2023/07/ventura.html#Burp-Suite)
 
-关于 Windows 版本，还有些小问题目前还在优化中～尽请期待，也可自行对代码进行修改编译。有问题欢迎与我沟通。
+## Windows 版本
+由于很多粉丝朋友都问过我关于有没有Windows版本的问题，我就改了下代码编译了一下。
 
-![图片](https://camo.githubusercontent.com/b1bc345bda10bb83efc5ba4fca038e8b1995c18acd0d9da6a0cb0ec0749734bc/68747470733a2f2f6d6d62697a2e717069632e636e2f6d6d62697a5f706e672f4f756d306b6578506f566f6a4c45305a5941346834576d396d37544a5865477033376d53774a556d6d696132464a5354766963534d67396662744468457a676755764b797645636962394e4d527a32433451763174725066412f3634303f77785f666d743d706e672666726f6d3d6170706d73672674703d7765627026777866726f6d3d352677785f6c617a793d312677785f636f3d31)
+与Mac版本的基本没区别，只是增加了Python的运行环境，以及一些常用的python工具。
+
+支持自定义添加python，java，GUI程序，打开命令行等功能。
+
+我觉得像一个启动器了，把需要执行的命令，参数，等等写进去就会按照这个执行。
+
+还是那个初衷，因为工具这个东西，每个人都有每个人顺手的工具，本项目呢只是提供了一个方便搜索，添加，删除，管理工具的一个框架，更好的管理常用的工具，当然这么一说，它的应用范围就广了，不仅仅局限于一个渗透工具的启动器了，也可以是其他任何的工具，看大家发挥了。有什么问题私信留言我，谢谢～
+对于配置文件修改的问题可以去看看往期的Mac Spear工具箱V3的文章，这里就不再赘述。
+
+自适应深色浅色主题
+<img width="847" alt="image" src="https://github.com/user-attachments/assets/f9a27634-9d16-40e2-a4b3-3f8c9453d1f5">
+<img width="846" alt="image" src="https://github.com/user-attachments/assets/e2914e49-0a42-4ac4-931f-0d8e29947c7f">
+
+添加python工具
+![](https://s2.loli.net/2024/08/24/FXkoxwDRUHS2rEi.png#errorMessage=unknown%20error&id=sy9Vu&originHeight=1536&originWidth=1700&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
+添加java工具
+<img width="852" alt="image" src="https://github.com/user-attachments/assets/f95852eb-095a-4a6f-a86f-904cf173f45f">
+
+对于exe这样的需要命令行调用的 直接打开工具所在目录，可只写路径名和工具名，运行方式为openterm
+![](https://s2.loli.net/2024/08/24/N7e9jQzbU4q3BXl.png#errorMessage=unknown%20error&id=hGgoB&originHeight=1552&originWidth=1708&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
+添加像蚁剑这样点击exe就可以出现图形化界面的可以使用Open运行方式
+![](https://s2.loli.net/2024/08/24/tzs17wReOQVrjoB.png#errorMessage=unknown%20error&id=u0phZ&originHeight=1550&originWidth=1706&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
+
+## 公众号
+![image](https://github.com/user-attachments/assets/8d233519-0f1e-49bc-9b2a-c46ded91bbf9)
+
