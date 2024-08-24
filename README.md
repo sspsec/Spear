@@ -106,17 +106,25 @@ Spear.app/Contents/Resources/resources/webshell/AntSword/antSword-2.1.15
 对于配置文件修改的问题可以去看看往期的Mac Spear工具箱V3的文章，这里就不再赘述。
 
 自适应深色浅色主题
+
 <img width="847" alt="image" src="https://github.com/user-attachments/assets/f9a27634-9d16-40e2-a4b3-3f8c9453d1f5">
+
 <img width="846" alt="image" src="https://github.com/user-attachments/assets/e2914e49-0a42-4ac4-931f-0d8e29947c7f">
 
 添加python工具
+
 ![](https://s2.loli.net/2024/08/24/FXkoxwDRUHS2rEi.png#errorMessage=unknown%20error&id=sy9Vu&originHeight=1536&originWidth=1700&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
+
 添加java工具
+
 <img width="852" alt="image" src="https://github.com/user-attachments/assets/f95852eb-095a-4a6f-a86f-904cf173f45f">
 
 对于exe这样的需要命令行调用的 直接打开工具所在目录，可只写路径名和工具名，运行方式为openterm
+
 ![](https://s2.loli.net/2024/08/24/N7e9jQzbU4q3BXl.png#errorMessage=unknown%20error&id=hGgoB&originHeight=1552&originWidth=1708&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
+
 添加像蚁剑这样点击exe就可以出现图形化界面的可以使用Open运行方式
+
 ![](https://s2.loli.net/2024/08/24/tzs17wReOQVrjoB.png#errorMessage=unknown%20error&id=u0phZ&originHeight=1550&originWidth=1706&originalType=binary&ratio=1&rotation=0&showTitle=false&status=error&style=none)
 
 ## 公众号
