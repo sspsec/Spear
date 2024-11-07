@@ -94,10 +94,50 @@ var categories Categories
 var config Config
 var cachedYAMLData []byte
 
-func main() {
-	myApp := app.NewWithID("com.sspsec.Spear")
-	currentTheme := &customTheme{Theme: theme.LightTheme(), isDarkMode: false}
+var myApp = app.NewWithID("com.sspsec.Spear")
+var myWindow = myApp.NewWindow("SSP渗透集成工具箱V4_by_Spe4r 公众号:SSP安全研究")
+var scrollableContents *container.Scroll
 
+var found bool
+var filename = "tool.yml"
+var cmd *exec.Cmd
+
+type rightButton struct {
+	widget.BaseWidget
+	tool              Tool
+	label             *widget.Label
+	OnTapped          func()
+	OnTappedSecondary func(*fyne.PointEvent)
+	OnMouseIn         func(*fyne.PointEvent)
+	OnMouseOut        func(*fyne.PointEvent)
+}
+
+func (w *rightButton) CreateRenderer() fyne.WidgetRenderer {
+	return widget.NewSimpleRenderer(container.NewWithoutLayout(w.label))
+}
+
+func (w *rightButton) Tapped(_ *fyne.PointEvent) {
+	if w.OnTapped != nil {
+		w.OnTapped()
+	}
+}
+
+func (w *rightButton) TappedSecondary(e *fyne.PointEvent) {
+	if w.OnTappedSecondary != nil {
+		w.OnTappedSecondary(e)
+	}
+}
+
+func newrightButton(name string) *rightButton {
+	w := &rightButton{
+		label: widget.NewLabel(name),
+	}
+	w.ExtendBaseWidget(w)
+	return w
+}
+
+func main() {
+	currentTheme := &customTheme{Theme: theme.LightTheme(), isDarkMode: false}
 	if fyne.CurrentApp().Settings().ThemeVariant() == theme.VariantDark {
 		currentTheme.isDarkMode = true
 		currentTheme.Theme = theme.DarkTheme()
@@ -107,7 +147,6 @@ func main() {
 	}
 	myApp.Settings().SetTheme(currentTheme)
 
-	myWindow := myApp.NewWindow("SSP渗透集成工具箱V3_by_Spe4r 公众号:SSP安全研究")
 	myWindow.SetMaster()
 
 	outputLabel := widget.NewLabel("Output will be shown here")
@@ -118,23 +157,26 @@ func main() {
 		log.Fatal(err)
 	}
 	yaml.Unmarshal(yamldata, &categories)
+
 	yaml.Unmarshal(yamldata, &config)
 
 	var categoryContainers []fyne.CanvasObject
 	var allContainers []*fyne.Container
 
 	updateToolContainers(outputLabel, &categoryContainers, &allContainers)
+	updateToolContainers(outputLabel, &categoryContainers, &allContainers)
 
 	mainContent := container.NewVBox(categoryContainers...)
 	scrollableContent := container.NewScroll(mainContent)
 	scrollableContent.SetMinSize(fyne.NewSize(850, 650))
-
+	scrollableContents = scrollableContent
 	searchEntry := widget.NewEntry()
 	searchEntry.SetPlaceHolder("搜索工具...")
 	searchEntry.Resize(fyne.NewSize(600, 40))
 
 	searchEntry.OnChanged = func(s string) {
 		if s == "" {
+
 			updateToolContainers(outputLabel, &categoryContainers, &allContainers)
 			scrollableContent.Content = container.NewVBox(categoryContainers...)
 		} else {
@@ -142,6 +184,7 @@ func main() {
 			s = strings.ToLower(s)
 			for _, container := range allContainers {
 				btn := container.Objects[0].(*widget.Button)
+
 				if strings.Contains(strings.ToLower(btn.Text), s) {
 					filteredObjects = append(filteredObjects, container)
 				}
@@ -211,7 +254,7 @@ func main() {
 						break
 					}
 				}
-				updateYAMLFile()
+				insertYAMLFile()
 				updateToolContainers(outputLabel, &categoryContainers, &allContainers)
 				scrollableContent.Content = container.NewVBox(categoryContainers...)
 				scrollableContent.Refresh()
@@ -222,69 +265,7 @@ func main() {
 		dialogWindow.Show()
 	})
 
-	removeButton := widget.NewButton("删除工具", func() {
-		categoryNames := make([]string, len(categories.Category))
-		for i, category := range categories.Category {
-			categoryNames[i] = category.Name
-		}
-		categorySelect := widget.NewSelect(categoryNames, nil)
-		toolSelect := widget.NewSelect([]string{}, nil)
-
-		categorySelect.OnChanged = func(s string) {
-			var toolNames []string
-			for _, category := range categories.Category {
-				if category.Name == s {
-					for _, tool := range category.Tool {
-						toolNames = append(toolNames, tool.Name)
-					}
-					break
-				}
-			}
-			toolSelect.Options = toolNames
-			toolSelect.Refresh()
-		}
-
-		form := container.NewVBox(
-			widget.NewForm(
-				widget.NewFormItem("类别", categorySelect),
-				widget.NewFormItem("工具名称", toolSelect),
-			),
-		)
-
-		var dialogWindow dialog.Dialog
-		dialogWindow = dialog.NewCustomConfirm("删除工具", "提交", "取消", form, func(confirm bool) {
-			if confirm {
-				toolName := toolSelect.Selected
-				var found bool
-				for i, category := range categories.Category {
-					if category.Name == categorySelect.Selected {
-						for j, tool := range category.Tool {
-							if tool.Name == toolName {
-								categories.Category[i].Tool = append(categories.Category[i].Tool[:j], categories.Category[i].Tool[j+1:]...)
-								found = true
-								break
-							}
-						}
-						break
-					}
-				}
-				if found {
-					updateYAMLFile()
-					updateToolContainers(outputLabel, &categoryContainers, &allContainers)
-					scrollableContent.Content = container.NewVBox(categoryContainers...)
-					scrollableContent.Refresh()
-					outputLabel.SetText("Removed: " + toolName)
-				} else {
-					outputLabel.SetText("Tool not found: " + toolName)
-				}
-			}
-		}, myWindow)
-
-		dialogWindow.Resize(fyne.NewSize(400, 200))
-		dialogWindow.Show()
-	})
-
-	searchAndAddContainer := container.NewBorder(nil, nil, nil, container.NewHBox(clearButton, addButton, removeButton), searchEntry)
+	searchAndAddContainer := container.NewBorder(nil, nil, nil, container.NewHBox(clearButton, addButton), searchEntry)
 
 	var background *canvas.RadialGradient
 	if currentTheme.isDarkMode {
@@ -302,22 +283,136 @@ func main() {
 	myWindow.ShowAndRun()
 }
 
-func createToolContainer(toolbase Tool, outputLabel *widget.Label) *fyne.Container {
+func createToolContainer(toolbase Tool, outputLabel *widget.Label, categoryContainers *[]fyne.CanvasObject, allContainers *[]*fyne.Container) *fyne.Container {
+
 	button := widget.NewButton(toolbase.Name, func() {
+
+	})
+	menu := fyne.NewMenu("",
+		fyne.NewMenuItem("删除", func() {
+			dialog.NewConfirm("确认操作", fmt.Sprintf("确定要删除 %s？", toolbase.Name), func(confirmed bool) {
+				if confirmed {
+					removeYAMLFile(toolbase.Name, outputLabel, categoryContainers, allContainers)
+				}
+			}, myWindow).Show()
+		}),
+		fyne.NewMenuItem("修改", func() {
+			updateToolConfig(toolbase, outputLabel, categoryContainers, allContainers)
+		}),
+		fyne.NewMenuItem("打开目录", func() {
+			currentDir := getFullPath(toolbase.Path)
+			if err := openToolDirectory(currentDir); err != nil {
+				WriteErrorToFile("打开路径错误", currentDir, err)
+			} else {
+				fmt.Println("目录已打开:", currentDir)
+			}
+		}),
+	)
+
+	buttonTop := newrightButton("")
+	buttonTop.tool = toolbase
+
+	buttonTop.OnTapped = func() {
 		err := ExecuteCommand(toolbase.Path, toolbase.Optional, toolbase.Value, toolbase.FileName)
 		if err != nil {
 			outputLabel.SetText("Error: " + err.Error())
 		} else {
 			outputLabel.SetText("Running: " + toolbase.Name)
 		}
-	})
+	}
 
-	toolContainer := container.NewVBox(button)
+	buttonTop.OnTappedSecondary = func(e *fyne.PointEvent) {
+		outputLabel.SetText("右键点击: " + toolbase.Name)
+		if e == nil {
+			println(e)
+			return
+		}
+		menus := widget.NewPopUpMenu(menu, myWindow.Canvas())
 
+		menus.ShowAtPosition(fyne.NewPos(e.AbsolutePosition.X, e.AbsolutePosition.Y))
+	}
+	toolContainer := container.NewMax(button, buttonTop)
 	return toolContainer
 }
 
+func updateToolConfig(toolbase Tool, outputLabel *widget.Label, categoryContainers *[]fyne.CanvasObject, allContainers *[]*fyne.Container) {
+	nameEntry := widget.NewEntry()
+	nameEntry.Text = toolbase.Name
+
+	pathEntry := widget.NewEntry()
+	pathEntry.Text = toolbase.Path
+
+	filenameEntry := widget.NewEntry()
+	filenameEntry.Text = toolbase.FileName
+
+	valueEntry := widget.NewEntry()
+	valueEntry.Text = toolbase.Value
+
+	commandEntry := widget.NewEntry()
+	commandEntry.Text = toolbase.Command
+
+	optionalEntry := widget.NewEntry()
+	optionalEntry.Text = toolbase.Optional
+
+	categoryNames := make([]string, len(categories.Category))
+	for i, category := range categories.Category {
+		categoryNames[i] = category.Name
+	}
+
+	categorySelect := widget.NewSelect(categoryNames, nil)
+
+	for i, category := range categories.Category {
+		for _, tool := range category.Tool {
+			if tool.Name == toolbase.Name {
+				categorySelect.Selected = categories.Category[i].Name
+				break
+			}
+		}
+	}
+
+	form := container.NewVBox(
+		widget.NewForm(
+			widget.NewFormItem("工具名称", nameEntry),
+			widget.NewFormItem("工具路径", pathEntry),
+			widget.NewFormItem("执行文件名", filenameEntry),
+			widget.NewFormItem("运行方式", valueEntry),
+			widget.NewFormItem("命令", commandEntry),
+			widget.NewFormItem("可选参数", optionalEntry),
+			widget.NewFormItem("类别", categorySelect),
+		),
+	)
+
+	var dialogWindow dialog.Dialog
+	dialogWindow = dialog.NewCustomConfirm("修改工具", "提交", "取消", form, func(confirm bool) {
+		if confirm {
+
+			newTool := Tool{
+				Name:     nameEntry.Text,
+				Path:     pathEntry.Text,
+				FileName: filenameEntry.Text,
+				Value:    valueEntry.Text,
+				Command:  commandEntry.Text,
+				Optional: optionalEntry.Text,
+			}
+			for i, category := range categories.Category {
+				if category.Name == categorySelect.Selected {
+					categories.Category[i].Tool = append(categories.Category[i].Tool, newTool)
+					break
+				}
+			}
+			fileName := toolbase.Name
+			updateYAMLFile(newTool, fileName, categorySelect.Selected)
+			updateToolContainers(outputLabel, categoryContainers, allContainers)
+			scrollableContents.Content = container.NewVBox(*categoryContainers...)
+			scrollableContents.Refresh()
+		}
+	}, myWindow)
+	dialogWindow.Resize(fyne.NewSize(400, 400))
+	dialogWindow.Show()
+}
+
 func updateToolContainers(outputLabel *widget.Label, categoryContainers *[]fyne.CanvasObject, allContainers *[]*fyne.Container) {
+
 	*categoryContainers = nil
 	*allContainers = nil
 
@@ -328,13 +423,13 @@ func updateToolContainers(outputLabel *widget.Label, categoryContainers *[]fyne.
 
 		for _, toolbase := range category.Tool {
 			toolbase := toolbase
-			container := createToolContainer(toolbase, outputLabel)
+			container := createToolContainer(toolbase, outputLabel, categoryContainers, allContainers)
 			buttons = append(buttons, container)
 			*allContainers = append(*allContainers, container)
 		}
 
 		catContainer := container.NewVBox(labelContainer)
-		gridContainer := container.NewGridWrap(fyne.NewSize(200, 40), buttons...)
+		gridContainer := container.NewGridWrap(fyne.NewSize(200, 35), buttons...)
 		catContainer.Add(gridContainer)
 		*categoryContainers = append(*categoryContainers, catContainer)
 	}
@@ -344,7 +439,7 @@ func ReadYAMLFile() ([]byte, error) {
 	if cachedYAMLData != nil {
 		return cachedYAMLData, nil
 	}
-	filename := "tool.yml"
+
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		WriteErrorToFile("Error reading file", filename, err)
@@ -354,8 +449,7 @@ func ReadYAMLFile() ([]byte, error) {
 	return data, nil
 }
 
-func updateYAMLFile() {
-	filename := "tool.yml"
+func insertYAMLFile() {
 	data, err := yaml.Marshal(&struct {
 		Categories []Category `yaml:"Categories"`
 		JavaPath   struct {
@@ -388,6 +482,87 @@ func updateYAMLFile() {
 		WriteErrorToFile("WriteFile error", filename, err)
 	}
 	cachedYAMLData = nil // Invalidate the cache
+}
+
+func updateYAMLFile(toolbase Tool, fileName, fileSourceName string) {
+
+	yamldata, err := ReadYAMLFile()
+	if err != nil {
+		log.Fatal(err)
+	}
+	yaml.Unmarshal(yamldata, &categories)
+
+	yaml.Unmarshal(yamldata, &config)
+
+	found := false
+
+	for i, categorie := range categories.Category {
+		for j, t := range categorie.Tool {
+			if t.Name == fileName {
+				if fileSourceName == categories.Category[i].Name {
+					found = true
+					categories.Category[i].Tool[j] = toolbase
+					break
+				} else {
+					categories.Category[i].Tool = append(categories.Category[i].Tool[:j], categories.Category[i].Tool[j+1:]...)
+				}
+			}
+		}
+		if found {
+			break
+		}
+	}
+	if !found {
+		for i, category := range categories.Category {
+			if category.Name == fileSourceName {
+				categories.Category[i].Tool = append(categories.Category[i].Tool, toolbase)
+				break
+			}
+		}
+	}
+
+	file, err := os.OpenFile("tool.yml", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return
+	}
+	content := "# Java 8\n" +
+		"# 路径：resources/java8/bin/java\n" +
+		"# 这个路径指向Java 8的可执行文件，适用于需要Java 8环境的应用。\n" +
+		"# Java 11\n" +
+		"# 路径：resources/java11/bin/java\n" +
+		"# 这个路径指向Java 11的可执行文件，适用于需要Java 11环境的应用。\n" +
+		"# 打开方式\n" +
+		"# 命令：open\n" +
+		"# 该命令用于打开或执行文件，具体依赖于操作系统的配置。\n"
+	_, _ = file.WriteString(content)
+	newData, _ := yaml.Marshal(categories)
+	_, _ = file.Write(newData)
+	newData, _ = yaml.Marshal(config)
+	_, _ = file.Write(newData)
+	cachedYAMLData = nil
+}
+
+func removeYAMLFile(toolName string, outputLabel *widget.Label, categoryContainers *[]fyne.CanvasObject, allContainers *[]*fyne.Container) {
+
+	for i, category := range categories.Category {
+		for j, tool := range category.Tool {
+			if tool.Name == toolName {
+				categories.Category[i].Tool = append(categories.Category[i].Tool[:j], categories.Category[i].Tool[j+1:]...)
+				found = true
+				break
+			}
+		}
+	}
+	if found {
+		insertYAMLFile()
+		updateToolContainers(outputLabel, categoryContainers, allContainers)
+
+		scrollableContents.Content = container.NewVBox(*categoryContainers...)
+		scrollableContents.Refresh()
+		outputLabel.SetText("Removed: " + toolName)
+	} else {
+		outputLabel.SetText("Tool not found: " + toolName)
+	}
 }
 
 func WriteErrorToFile(msg, filename string, err error) {
@@ -453,16 +628,15 @@ func ExecuteCommand(path, optional, value, filename string) error {
 	return nil
 }
 
+func getFullPath(relativePath string) string {
+	currentDir, _ := os.Getwd()
+	return filepath.Join(currentDir, relativePath)
+}
+
 func openTerminal(dir string) error {
-	var cmd *exec.Cmd
 	switch runtime.GOOS {
 	case "darwin":
-		currentDir, err := os.Getwd()
-		if err != nil {
-			WriteErrorToFile("Get working directory error", dir, err)
-			return err
-		}
-		fullPath := filepath.Join(currentDir, dir)
+		fullPath := getFullPath(dir)
 		itermPath := "/Applications/iTerm.app"
 
 		if _, err := os.Stat(itermPath); err == nil {
@@ -493,4 +667,15 @@ func openTerminal(dir string) error {
 		return fmt.Errorf("failed to open terminal: %w", err)
 	}
 	return nil
+}
+
+func openToolDirectory(dir string) error {
+
+	switch runtime.GOOS {
+	case "darwin":
+		cmd = exec.Command("open", dir)
+	default:
+		return fmt.Errorf("unsupported platform")
+	}
+	return cmd.Start()
 }
