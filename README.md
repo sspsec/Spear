@@ -93,9 +93,7 @@ codesign --sign - Spear.app
    fyne package -os darwin -icon Icon.png
    ```
 
-3. Windows编译
-
-   ：
+3. Windows编译：
 
    ```
    GOOS=windows GOARCH=amd64 go build -ldflags -H=windowsgui -o Spear.exe main.go
