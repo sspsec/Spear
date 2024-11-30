@@ -42,9 +42,13 @@ codesign --sign - Spear.app
 <img width="858" alt="image" src="https://github.com/user-attachments/assets/76aec28c-c549-4f3e-9b55-7f7ead8a9aaf">
 
 
-​	之后点击按钮进行添加，填写工具名称，工具路径为以 `resources` 开头的路径，因为在代码中进行拼接，以及 Mac 上 app 的资源目录在此，所以用了相对路径。执行文件名为 `Jyso-1.3.1.jar`，因为其没有 GUI 界面，只能通过打开所在文件的终端进行运行，所以也可不写。运行方式一共有四种，如打开 fofaviewer 等带有 GUI 页面的工具时，可使用 Java8、Java11 进行打开，命令为 `-jar`。可选参数是留给 CS、冰蝎、哥斯拉等需要 Java 的其他参数时用到的，因 JYso 没有 GUI 页面，所以这里使用 `openterm` 进行打开终端，选择类别进行提交即可添加成功。
+​	之后点击按钮进行添加，填写工具名称，工具路径为以 `resources` 开头的路径，因为在代码中进行拼接，以及 Mac 上 app 的资源目录在此，所以用了相对路径。执行文件名为 `Jyso-1.3.1.jar`，
+因为其没有 GUI 界面，只能通过打开所在文件的终端进行运行，所以也可不写。运行方式一共有四种，如打开 fofaviewer 等带有 GUI 页面的工具时，可使用 Java8、Java11 进行打开，命令为 `-jar`。
+可选参数是留给 CS、冰蝎、哥斯拉等需要 Java 的其他参数时用到的，因 JYso 没有 GUI 页面，所以这里使用 `openterm` 进行打开终端，选择类别进行提交即可添加成功。
+
 
 还有一类运行方式为 `open`，需要添加执行 app 程序可以使用该运行方式，如打开 OSS-Browser.app。
+
 <img width="858" alt="image" src="https://github.com/user-attachments/assets/44dfb6d0-f34b-4861-a029-479576b71c53">
 
 
