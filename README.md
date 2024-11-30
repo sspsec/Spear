@@ -23,20 +23,12 @@
 **首次运行提示验证签名失败**，执行以下命令可以正常启动：
 
 ```
-sh
-
-
-复制代码
 xattr -rd com.apple.quarantine Spear.app
 ```
 
 对于 macOS Sequoia 测试版系统，执行：
 
 ```
-sh
-
-
-复制代码
 codesign --sign - Spear.app
 ```
 
@@ -91,10 +83,6 @@ codesign --sign - Spear.app
    ：
 
    ```
-   sh
-   
-   
-   复制代码
    go install fyne.io/fyne/v2/cmd/fyne@latest
    fyne package -os darwin -icon Icon.png
    ```
@@ -104,10 +92,6 @@ codesign --sign - Spear.app
    ：
 
    ```
-   sh
-   
-   
-   复制代码
    export GOOS=darwin
    export GOARCH=amd64
    fyne package -os darwin -icon Icon.png
@@ -118,10 +102,6 @@ codesign --sign - Spear.app
    ：
 
    ```
-   sh
-   
-   
-   复制代码
    GOOS=windows GOARCH=amd64 go build -ldflags -H=windowsgui -o Spear.exe main.go
    ```
 
@@ -130,10 +110,6 @@ codesign --sign - Spear.app
 ## 蚁剑资源文件夹
 
 ```
-bash
-
-
-复制代码
 Spear.app/Contents/Resources/resources/webshell/AntSword/antSword-2.1.15
 ```
 
@@ -142,10 +118,6 @@ Spear.app/Contents/Resources/resources/webshell/AntSword/antSword-2.1.15
 ## BurpSuite 激活
 
 ```
-bash
-
-
-复制代码
 /Applications/Spear.app/Contents/Resources/resources/pentest/BurpSuite/BurpSuite.app/Contents/Resources/app/BurpSuiteLoader.jar
 ```
 
