@@ -78,18 +78,14 @@ codesign --sign - Spear.app
 
 ### 编译命令：
 
-1. M系列芯片编译
-
-   ：
+1. M系列芯片编译：
 
    ```
    go install fyne.io/fyne/v2/cmd/fyne@latest
    fyne package -os darwin -icon Icon.png
    ```
 
-2. Intel芯片编译
-
-   ：
+2. Intel芯片编译：
 
    ```
    export GOOS=darwin
