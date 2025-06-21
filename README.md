@@ -82,6 +82,18 @@ Spear工具箱的用户，可兼容V5以及更早版本的配置文件。只需�
 ![image-20250621115830494](https://s2.loli.net/2025/06/21/BkEmAg4Tbw8OhSV.png)
 
 
+## Spear X 编译
+
+```
+# 编译M芯片版本
+wails build -platform darwin/arm64 -clean
+
+# 编译Intel芯片版本
+wails build -platform darwin/amd64 -clean 
+```
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/22ff5d62-1161-4a9d-aed6-d140d0bb2ae7" />
+
+
 ## 前言
 
 在 **Spear 工具箱 V2 版本** 中，引入了 **YAML 文件** 来管理工具并动态加载 GUI 页面。虽然这种方式可以实现工具管理，但修改配置文件的方式不够便捷和直观。因此在 **V3 版本** 中，新增了两个按钮：**添加工具** 和 **删除工具**。这两个按钮本质上仍然是对 `tool.yml` 文件进行操作，添加工具时会将执行信息添加到 YAML 文件中，删除工具时则会从 YAML 文件中删除对应的工具配置。
