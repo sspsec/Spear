@@ -1,20 +1,20 @@
 {
-  "name": "Spear",
-  "outputfilename": "Spear",
+  "name": "SpearX",
+  "outputfilename": "SpearX",
   "frontend:install": "npm install",
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
-    "name": "",
+    "name": "Spe4r",
     "email": ""
   },
   "info": {
-    "companyName": "SSPSec",
-    "productName": "Spear",
-    "productVersion": "1.0.0",
-    "copyright": "© 2025 SSPSec",
-    "comments": "SSP渗透集成工具箱"
+    "companyName": "Spe4r Development",
+    "productName": "SpearX",
+    "productVersion": "2.0.0",
+    "copyright": "© 2025 Spe4r",
+    "comments": "Modern cross-platform tool manager by Spe4r"
   },
   "debounceMS": 100,
   "devServer": "localhost:34115",

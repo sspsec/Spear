@@ -24,7 +24,7 @@ func main() {
 
 	// 创建应用配置
 	err := wails.Run(&options.App{
-		Title:  "Spear X",
+		Title:  "SpearX",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{
@@ -40,10 +40,10 @@ func main() {
 			Appearance:           mac.NSAppearanceNameDarkAqua, // 固定使用深色模式
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
-			TitleBar:             mac.TitleBarDefault(),
+			TitleBar:             mac.TitleBarHiddenInset(),
 			About: &mac.AboutInfo{
-				Title:   "Spear X",
-				Message: "© 2025 微信公众号：SSP安全研究 https://github.com/sspsec/Spear",
+				Title:   "SpearX",
+				Message: "A modern cross-platform tool manager\n\nDeveloped by Spe4r\n© 2025 Spe4r Development\n\nVersion 2.0.0",
 				Icon:    icon, // 使用嵌入的图标
 			},
 		},
@@ -54,37 +54,26 @@ func main() {
 	}
 }
 
-func (a *App) SelectFile() (string, error) {
-	dialog, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
-		Title:            "选择工具文件",
+func (a *App) Select(selectFolder bool) (string, error) {
+	var dialog string
+	var err error
+
+	options := runtime.OpenDialogOptions{
+		Title:            "选择工具",
 		DefaultDirectory: "/Applications/Spear.app/Contents/Resources",
-		Filters: []runtime.FileFilter{
+	}
+
+	if selectFolder {
+		dialog, err = runtime.OpenDirectoryDialog(a.ctx, options)
+	} else {
+		options.Filters = []runtime.FileFilter{
 			{
 				DisplayName: "所有文件 (*)",
 				Pattern:     "*",
 			},
-			{
-				DisplayName: "Mac可执行文件 (无扩展名, *.command)",
-				Pattern:     "*;*.command;*.app;*.*",
-			},
-			{
-				DisplayName: "Shell脚本 (*.sh)",
-				Pattern:     "*.sh",
-			},
-			{
-				DisplayName: "脚本文件 (*.py, *.php, *.js, *.jsp, *.asp)",
-				Pattern:     "*.py;*.php;*.js;*.jsp;*.asp;*.aspx",
-			},
-			{
-				DisplayName: "Java文件 (*.jar, *.class, *.java)",
-				Pattern:     "*.jar;*.class;*.java",
-			},
-			{
-				DisplayName: "文本文件 (*.txt, *.log, *.conf)",
-				Pattern:     "*.txt;*.log;*.conf;*.ini;*.yaml;*.json",
-			},
-		},
-	})
+		}
+		dialog, err = runtime.OpenFileDialog(a.ctx, options)
+	}
 
 	if err != nil {
 		return "", err
