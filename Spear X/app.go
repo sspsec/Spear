@@ -740,44 +740,9 @@ func (a *App) UpdateTool(originalName, categoryName string, tool Tool) error {
 		}
 	}
 
-	// 创建或打开文件
-	file, err := os.OpenFile(configPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("打开配置文件失败: %v", err)
-	}
-	defer file.Close()
-
-	// 写入JavaPaths配置
-	javaPathsData, err := yaml.Marshal(config.JavaPaths)
-	if err != nil {
-		return fmt.Errorf("序列化JavaPaths失败: %v", err)
-	}
-
-	// 写入完整配置
-	content := fmt.Sprintf(`# Java配置
-# 自定义Java路径配置，如果留空将使用系统默认Java
-javapath:
-%s
-# Java 8
-# 路径：resources/java8/bin/java
-# 这个路径指向Java 8的可执行文件，适用于需要Java 8环境的应用。
-# Java 11
-# 路径：resources/java11/bin/java
-# 这个路径指向Java 11的可执行文件，适用于需要Java 11环境的应用。
-# 打开方式
-# 命令：open
-# 该命令用于打开或执行文件，具体依赖于操作系统的配置。
-`, string(javaPathsData))
-
-	if _, err := file.WriteString(content); err != nil {
-		return fmt.Errorf("写入配置失败: %v", err)
-	}
-
-	// 写入Categories数据
-	if newData, err := yaml.Marshal(categories); err != nil {
-		return fmt.Errorf("序列化Categories失败: %v", err)
-	} else if _, err := file.Write(newData); err != nil {
-		return fmt.Errorf("写入Categories数据失败: %v", err)
+	// 使用统一的保存方法
+	if err := a.saveCategoriesToFile(categories, config); err != nil {
+		return err
 	}
 
 	// 发送更新成功事件
@@ -819,47 +784,8 @@ func (a *App) AddCategory(categoryName string) error {
 	}
 	categories.Category = append(categories.Category, newCategory)
 
-	// 创建或打开文件
-	file, err := os.OpenFile(configPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("打开配置文件失败: %v", err)
-	}
-	defer file.Close()
-
-	// 写入JavaPaths配置
-	javaPathsData, err := yaml.Marshal(config.JavaPaths)
-	if err != nil {
-		return fmt.Errorf("序列化JavaPaths失败: %v", err)
-	}
-
-	// 写入完整配置
-	content := fmt.Sprintf(`# Java配置
-# 自定义Java路径配置，如果留空将使用系统默认Java
-javapath:
-%s
-# Java 8
-# 路径：resources/java8/bin/java
-# 这个路径指向Java 8的可执行文件，适用于需要Java 8环境的应用。
-# Java 11
-# 路径：resources/java11/bin/java
-# 这个路径指向Java 11的可执行文件，适用于需要Java 11环境的应用。
-# 打开方式
-# 命令：open
-# 该命令用于打开或执行文件，具体依赖于操作系统的配置。
-`, string(javaPathsData))
-
-	if _, err := file.WriteString(content); err != nil {
-		return fmt.Errorf("写入配置失败: %v", err)
-	}
-
-	// 写入Categories数据
-	if newData, err := yaml.Marshal(categories); err != nil {
-		return fmt.Errorf("序列化Categories失败: %v", err)
-	} else if _, err := file.Write(newData); err != nil {
-		return fmt.Errorf("写入Categories数据失败: %v", err)
-	}
-
-	return nil
+	// 使用统一的保存方法
+	return a.saveCategoriesToFile(categories, config)
 }
 
 // DeleteCategory 删除分类及其下的所有工具
@@ -990,44 +916,9 @@ func (a *App) UpdateToolDescription(toolName, categoryName, description string) 
 		return fmt.Errorf("未找到工具: %s", toolName)
 	}
 
-	// 创建或打开文件
-	file, err := os.OpenFile(configPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("打开配置文件失败: %v", err)
-	}
-	defer file.Close()
-
-	// 写入JavaPaths配置
-	javaPathsData, err := yaml.Marshal(config.JavaPaths)
-	if err != nil {
-		return fmt.Errorf("序列化JavaPaths失败: %v", err)
-	}
-
-	// 写入完整配置
-	content := fmt.Sprintf(`# Java配置
-# 自定义Java路径配置，如果留空将使用系统默认Java
-javapath:
-%s
-# Java 8
-# 路径：resources/java8/bin/java
-# 这个路径指向Java 8的可执行文件，适用于需要Java 8环境的应用。
-# Java 11
-# 路径：resources/java11/bin/java
-# 这个路径指向Java 11的可执行文件，适用于需要Java 11环境的应用。
-# 打开方式
-# 命令：open
-# 该命令用于打开或执行文件，具体依赖于操作系统的配置。
-`, string(javaPathsData))
-
-	if _, err := file.WriteString(content); err != nil {
-		return fmt.Errorf("写入配置失败: %v", err)
-	}
-
-	// 写入Categories数据
-	if newData, err := yaml.Marshal(categories); err != nil {
-		return fmt.Errorf("序列化Categories失败: %v", err)
-	} else if _, err := file.Write(newData); err != nil {
-		return fmt.Errorf("写入Categories数据失败: %v", err)
+	// 使用统一的保存方法
+	if err := a.saveCategoriesToFile(categories, config); err != nil {
+		return err
 	}
 
 	// 发送更新成功事件
