@@ -10,7 +10,8 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat)](LICENSE)
 
 **一款现代化的跨平台工具管理器，为开发者和安全研究人员打造**  
-**集成多种工具类型，支持智能分类管理和一键执行**
+**集成多种工具类型，支持智能分类管理和一键执行**  
+**在极简中发现极致，在安静中感受力量。**
 
 **Created by Spe4r** ⚡
 
@@ -447,6 +448,8 @@ JavaPaths:
   Java11: "/Library/Java/JavaVirtualMachines/jdk-11.0.12.jdk/Contents/Home/bin/java"
   Java17: "/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home/bin/java"
 ```
+<img width="1024" height="768" alt="图片" src="https://github.com/user-attachments/assets/50058bb9-1198-4017-a288-ed2a502884ae" />
+
 
 
 
@@ -540,9 +543,9 @@ wails build -clean
 > **首次运行提示验证签名失败**，执行以下命令可以正常启动：
 >
 > ```
-> xattr -rd com.apple.quarantine Spear.app
+> xattr -rd com.apple.quarantine SpearX.app
 > 或
-> codesign --sign - Spear.app
+> codesign --sign - SpearX.app
 > ```
 >
 
@@ -624,11 +627,15 @@ wails build -clean
 ---
 
 <div align="center">
-**如果 SpearX 对你有帮助，请给我们一个 ⭐ Star！**
+  
+**如果 SpearX 对你有帮助，请给我们一个 ⭐ Star！或许也可以请作者喝杯奶茶~**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=spe4r/spear-x&type=Date)](https://star-history.com/#spe4r/spear-x&Date)
+<img width="790" height="463" alt="图片" src="https://github.com/user-attachments/assets/8639eb28-68bc-48ba-a65e-5fd30ca3e9af" />
 
-[🐛 报告问题](https://github.com/sspsec/Spear/issues) • [💡 功能建议](https://github.com/sspsec/Spear/issues) • [📖 Wiki 文档](https://github.com/sspsec/Spear/wiki)
+
+[![Star History Chart](https://api.star-history.com/svg?repos=sspsec/Spear&type=Date)](https://star-history.com/#sspsec/Spear&Date)
+
+[🐛 报告问题](https://github.com/sspsec/Spear/issues) • [💡 功能建议](https://github.com/sspsec/Spear/issues) 
 
 **Created with ❤️ by Spe4r**
 
