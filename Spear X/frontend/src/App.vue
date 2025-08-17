@@ -546,18 +546,12 @@
               </template>
               <template #append>
                 <el-button 
-                  @click.stop="selectToolFile" 
-                  :icon="FolderOpened"
-                  title="选择文件"
+                  @click.stop="editDialog.tool.fileName ? clearFileSelection() : selectToolFile()" 
+                  :title="editDialog.tool.fileName ? '清除选择' : '选择文件'"
+                  :type="editDialog.tool.fileName ? 'danger' : 'primary'"
                 >
-                  打开
+                  {{ editDialog.tool.fileName ? '清除' : '打开' }}
                 </el-button>
-                <el-button 
-                  @click.stop="clearFileSelection" 
-                  :icon="Delete"
-                  title="清除选择"
-                  v-if="editDialog.tool.fileName"
-                />
               </template>
             </el-input>
           </el-form-item>

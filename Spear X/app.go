@@ -474,7 +474,8 @@ func (a *App) getResourcePath() string {
 	if execPath, err := os.Executable(); err == nil {
 		// 对于 .app 包，可执行文件在 Contents/MacOS 目录下
 		// 资源文件在 Contents/Resources 目录下
-		if strings.HasSuffix(execPath, "/Contents/MacOS/Spear") {
+		// 通用检测：如果路径包含 Contents/MacOS，则认为是 .app 包
+		if strings.Contains(execPath, "/Contents/MacOS/") {
 			return filepath.Join(filepath.Dir(execPath), "../Resources")
 		}
 
@@ -489,7 +490,7 @@ func (a *App) getResourcePath() string {
 			// 如果上面的路径不存在，则尝试从项目根目录找到 build/bin/Spear.app/Contents/Resources
 			projectRoot := filepath.Join(filepath.Dir(execPath), "../../../../../")
 			if absProjectRoot, err := filepath.Abs(projectRoot); err == nil {
-				appResourcesPath := filepath.Join(absProjectRoot, "build/bin/Spear.app/Contents/Resources")
+				appResourcesPath := filepath.Join(absProjectRoot, "build/bin/SpearX.app/Contents/Resources")
 				if _, err := os.Stat(appResourcesPath); err == nil {
 					return appResourcesPath
 				}
