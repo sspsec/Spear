@@ -624,11 +624,13 @@ wails build -clean
 ---
 
 <div align="center">
-**如果 SpearX 对你有帮助，请给我们一个 ⭐ Star！**
+**如果 SpearX 对你有帮助，请给我一个 ⭐ Star！，或许也可以请我喝杯奶茶**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=spe4r/spear-x&type=Date)](https://star-history.com/#spe4r/spear-x&Date)
+<img width="790" height="463" alt="图片" src="https://github.com/user-attachments/assets/6e2b5a9e-8eec-4eb7-8627-0f64b8c8b8b5" />
 
-[🐛 报告问题](https://github.com/sspsec/Spear/issues) • [💡 功能建议](https://github.com/sspsec/Spear/issues) • [📖 Wiki 文档](https://github.com/sspsec/Spear/wiki)
+[![Star History Chart](https://api.star-history.com/svg?repos=sspsec/Spear&type=Date)](https://star-history.com/#sspsec/Spear&Date)
+
+[🐛 报告问题](https://github.com/sspsec/Spear/issues) • [💡 功能建议](https://github.com/sspsec/Spear/issues)
 
 **Created with ❤️ by Spe4r**
 
