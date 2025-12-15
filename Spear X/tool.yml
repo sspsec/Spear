@@ -1,0 +1,75 @@
+# Java配置
+# 自定义Java路径配置，如果留空将使用系统默认Java
+javapath:
+  Java8: resources/java8/bin/java
+  Java11: resources/java11/bin/java
+  Java17: resources/java17/bin/java
+Categories:
+  - CategoryName: 信息收集
+    Tools:
+      - ToolName: WebFinder
+        PATH: resources/info/webfinder
+        FileName: webfinder-next.jar
+        VALUE: Java8
+        COMMAND: -jar
+        Optional: ""
+      - ToolName: ScanDir
+        PATH: resources/info/dirscan_3.0
+        FileName: scandir-3.0.jar
+        VALUE: Java8
+        COMMAND: -jar
+        Optional: ""
+      - ToolName: MiTian
+        PATH: resources/info/mitan1.11
+        FileName: mitan-jar-with-dependencies.jar
+        VALUE: Java11
+        COMMAND: -jar
+        Optional: ""
+      - ToolName: XrayGUI
+        PATH: resources/info/xray
+        FileName: super-xray-1.7.jar
+        VALUE: Java8
+        COMMAND: -jar
+        Optional: ""
+      - ToolName: Gorailgun
+        PATH: resources/info/gorailgun-normal-1.5.5
+        FileName: gorailgun-normal-1.5.5.app
+        VALUE: Open
+        COMMAND: ""
+        Optional: ""
+      - ToolName: heapdump
+        PATH: resources/info/heapdump
+        FileName: JDumpSpider-1.1-SNAPSHOT-full.jar
+        VALUE: openterm
+        COMMAND: ""
+        Optional: ""
+      - ToolName: GitHub
+        PATH: https://github.com
+        FileName: ""
+        VALUE: Browser
+        COMMAND: ""
+        Optional: ""
+      - ToolName: GitHub-SSPSEC
+        PATH: https://github.com/sspsec
+        FileName: ""
+        VALUE: Browser
+        COMMAND: ""
+        Optional: ""
+      - ToolName: Google搜索
+        PATH: https://www.google.com
+        FileName: ""
+        VALUE: Browser
+        COMMAND: ""
+        Optional: ""
+      - ToolName: StackOverflow
+        PATH: https://stackoverflow.com
+        FileName: ""
+        VALUE: Browser
+        COMMAND: ""
+        Optional: ""
+      - ToolName: 百度搜索
+        PATH: https://www.baidu.com
+        FileName: ""
+        VALUE: Browser
+        COMMAND: ""
+        Optional: ""
