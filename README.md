@@ -1,4 +1,4 @@
-# SpearX - 现代化跨平台工具管理器
+# SpearX - 现代化工具管理器
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 [![Vue 3](https://img.shields.io/badge/Vue.js-3.0+-4FC08D?style=flat&logo=vue.js)](https://vuejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat)](LICENSE)
 
-**一款现代化的跨平台工具管理器，为开发者和安全研究人员打造**  
+**一款面向开发者和安全研究人员的工具管理器**
 **集成多种工具类型，支持智能分类管理和一键执行**
 
 **Created by Spe4r** ⚡
@@ -93,7 +93,7 @@
 ```bash
 # 1. 克隆仓库
 git clone https://github.com/sspsec/Spear.git
-cd spear-x
+cd Spear/Spear\ X
 
 # 2. 安装 Wails CLI (如果未安装)
 go install github.com/wailsapp/wails/v2/cmd/wails@latest

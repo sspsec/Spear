@@ -1,0 +1,11 @@
+# Generated/build output
+Spear X/frontend/node_modules/
+Spear X/frontend/dist/
+Spear X/build/
+
+# Local/editor files
+.DS_Store
+**/.DS_Store
+*.swp
+*.swo
+*.timestamp-*
