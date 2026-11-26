@@ -14,8 +14,9 @@ import (
 )
 
 //go:embed all:frontend/dist
-//go:embed build/appicon.png
 var assets embed.FS
+
+//go:embed build/appicon.png
 var icon []byte
 
 func main() {

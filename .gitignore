@@ -1,7 +1,8 @@
 # Generated/build output
 Spear X/frontend/node_modules/
 Spear X/frontend/dist/
-Spear X/build/
+Spear X/build/*
+!Spear X/build/appicon.png
 
 # Local/editor files
 .DS_Store
